@@ -24,6 +24,12 @@
   header h1 { font-family: 'Gowun Batang', serif; font-size: clamp(30px, 6vw, 48px); margin: 18px 0 10px; }
   header p { color: #7a6654; font-size: 17px; }
 
+  .members { max-width: 860px; margin: 6px auto 30px; padding: 0 20px; text-align: center; }
+  .members h3 { font-family: 'Gowun Batang', serif; font-size: 18px; color: #7a6654; margin-bottom: 14px; letter-spacing: 1px; }
+  .members .chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+  .members .m { background: #fffaf2; border: 1.5px solid #c9b49a; border-radius: 999px; padding: 8px 18px; font-size: 17px; }
+  .members .m.away { border-style: dashed; background: #fdeee8; border-color: #e0a58f; }
+  .members .m small { font-size: 13px; color: #b0533c; margin-left: 4px; }
   .gallery {
     max-width: 1100px; margin: 20px auto 0; padding: 0 20px;
     display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 26px;
@@ -42,7 +48,10 @@
     font-size: 54px;
   }
   .polaroid img, .polaroid video { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .polaroid .cap { font-family: 'Gowun Batang', serif; text-align: center; margin-top: 12px; font-size: 16px; }
+  .polaroid .date {
+    text-align: center; margin-top: 12px; font-size: 13px; letter-spacing: 1px; color: #b0533c; font-weight: bold;
+  }
+  .polaroid .cap { font-family: 'Gowun Batang', serif; text-align: center; margin-top: 4px; font-size: 16px; }
 
   .leave-box {
     max-width: 640px; margin: 80px auto 120px; padding: 40px 24px; text-align: center;
@@ -60,6 +69,21 @@
   }
   #leaveBtn.running { position: fixed; }
   #leaveBtn:active { transform: translateY(3px); box-shadow: 0 1px 0 #8e2a20; }
+  .counter {
+    display: inline-flex; align-items: center; gap: 14px; margin-bottom: 26px;
+    background: #3b2f25; color: #f7f1e6; padding: 10px 26px; border-radius: 999px;
+    z-index: 999; transition: background .3s;
+  }
+  .counter .label { font-size: 18px; }
+  .counter .num { font-family: 'Gowun Batang', serif; font-weight: 700; font-size: 52px; line-height: 1; color: #ffd166; display: inline-block; }
+  .counter.floating {
+    position: fixed; top: 18px; left: 50%; transform: translateX(-50%);
+    box-shadow: 0 8px 24px rgba(59,47,37,.35);
+  }
+  .counter.done { background: #2e7d32; }
+  .num.pop { animation: pop .4s ease-out; }
+  @keyframes pop { 0% { transform: scale(1.9); color: #ff6b6b; } 100% { transform: scale(1); } }
+  #leaveBtn.tired { background: #7a6654; box-shadow: 0 4px 0 #4f4135; }
   #taunt { margin-top: 26px; min-height: 26px; font-size: 17px; color: #c0392b; font-weight: bold; }
   footer { text-align: center; color: #a8937e; font-size: 13px; padding-bottom: 30px; }
 </style>
@@ -72,11 +96,19 @@
   <p>한 권의 책이 한 바퀴 돌 때마다, 우리는 조금씩 가까워졌습니다.</p>
 </header>
 
+<section class="members">
+  <h3>함께 읽는 사람들</h3>
+  <div class="chips"><span class="m">이철희</span><span class="m">장인형</span><span class="m">김수경</span><span class="m">황정은</span><span class="m">강범현</span><span class="m">임유원</span><span class="m">김연경</span><span class="m">정혜원</span><span class="m away">김경주 <small>휴직 중 · 보고 싶어요 💌</small></span></div>
+</section>
+
 <section class="gallery" id="gallery"></section>
+
+<section id="guestbook" data-title="📝 교환독서 방명록" data-sub="책 이야기, 고마운 마음, 내년 다짐… 한마디 남겨주세요!" data-page="메인"></section>
 
 <section class="leave-box">
   <h2>탈퇴를 원하시나요?</h2>
   <p>아래 버튼을 눌러주세요.</p>
+  <div class="counter" id="counter"><span class="label">남은 도망 횟수</span><span class="num" id="countNum">5</span></div>
   <div class="btn-slot" id="slot"><button id="leaveBtn">탈퇴하기</button></div>
   <div id="taunt"></div>
 </section>
@@ -87,14 +119,14 @@
 /* ===== 사진 설정 =====
    photos 폴더에 사진을 넣고, 아래 목록에 파일 이름과 설명을 적어주세요. */
 const PHOTOS = [
-  { src: 'photos/p1.jpg', cap: '1회차 · 책들이 처음 모인 날' },
-  { src: 'photos/v1.mp4', poster: 'photos/v1.jpg', cap: '🎬 책, 바꿔 들기!' },
-  { src: 'photos/p2.jpg', cap: '2회차 · 손에서 손으로' },
-  { src: 'photos/v2.mp4', poster: 'photos/v2.jpg', cap: '🎬 한 바퀴 돌았습니다' },
-  { src: 'photos/p3.jpg', cap: '3회차 · 새 책이 들어왔어요' },
-  { src: 'photos/v3.mp4', poster: 'photos/v3.jpg', cap: '🎬 오늘은 누구 차례?' },
-  { src: 'photos/p4.jpg', cap: '4회차 · 간식도 함께 🍪' },
-  { src: 'photos/v4.mp4', poster: 'photos/v4.jpg', cap: '🎬 그리고 또 다음 책으로' },
+  { src: 'photos/p1.jpg', date: '2026. 6. 2 (화)', cap: '1회차 · 책들이 처음 모인 날' },
+  { src: 'photos/v1.mp4', poster: 'photos/v1.jpg', date: '2026. 6. 2 (화)', cap: '🎬 책, 바꿔 들기!' },
+  { src: 'photos/p2.jpg', date: '2026. 7. 16 (목)', cap: '2회차 · 손에서 손으로' },
+  { src: 'photos/v2.mp4', poster: 'photos/v2.jpg', date: '2026. 7. 16 (목)', cap: '🎬 한 바퀴 돌았습니다' },
+  { src: 'photos/p3.jpg', date: '2026. 9. 23 (수)', cap: '3회차 · 새 책이 들어왔어요' },
+  { src: 'photos/v3.mp4', poster: 'photos/v3.jpg', date: '2026. 9. 23 (수)', cap: '🎬 오늘은 누구 차례?' },
+  { src: 'photos/p4.jpg', date: '2026. 11. 4 (수)', cap: '4회차 · 앗, 아래 빵이 보이네 🥐' },
+  { src: 'photos/v4.mp4', poster: 'photos/v4.jpg', date: '2026. 11. 4 (수)', cap: '🎬 그리고 또 다음 책으로' },
 ];
 
 const gallery = document.getElementById('gallery');
@@ -102,8 +134,9 @@ const emojis = ['📖','📚','☕','🔖','✏️','🌿'];
 PHOTOS.forEach((p, i) => {
   const card = document.createElement('div');
   card.className = 'polaroid';
-  card.innerHTML = `<div class="img"></div><div class="cap"></div>`;
+  card.innerHTML = `<div class="img"></div><div class="date"></div><div class="cap"></div>`;
   card.querySelector('.cap').textContent = p.cap;
+  card.querySelector('.date').textContent = p.date || '';
   const box = card.querySelector('.img');
   if (p.src.endsWith('.mp4')) {
     const v = document.createElement('video');
@@ -122,12 +155,15 @@ PHOTOS.forEach((p, i) => {
 });
 
 /* ===== 도망가는 탈퇴 버튼 ===== */
-const RUN_SECONDS = 10;      // 도망가는 시간
+const MAX_ESCAPES = 5;       // 도망가는 횟수
 const NEAR = 110;            // 이 거리(px) 안에 들어오면 도망
+const COOLDOWN = 400;        // 한 번 도망간 뒤 쉬는 시간(ms) – 한 번에 여러 번 세지 않도록
 const btn = document.getElementById('leaveBtn');
 const taunt = document.getElementById('taunt');
-let startedAt = null;
-let tired = false;
+const counter = document.getElementById('counter');
+const countNum = document.getElementById('countNum');
+let left = MAX_ESCAPES;
+let lastEscape = 0;
 
 const lines = [
   '어딜 가세요~? 🙈', '안 잡히지롱 😝', '책이 아직 한 바퀴 더 남았어요!',
@@ -135,42 +171,52 @@ const lines = [
   '헉 거의 잡힐 뻔! 💨', '다음 책 벌써 골라놨는데요?'
 ];
 
-function isRunning() {
-  if (tired) return false;
-  if (startedAt && (Date.now() - startedAt) / 1000 >= RUN_SECONDS) {
-    tired = true;
-    btn.textContent = '헉헉… 지쳤어요 😮‍💨 누르세요';
+const isRunning = () => left > 0;
+
+function bump() {
+  countNum.textContent = left;
+  countNum.classList.remove('pop'); void countNum.offsetWidth; countNum.classList.add('pop');
+  if (left === 0) {
+    counter.classList.add('done');
+    counter.innerHTML = '<span class="label">도망 끝!</span><span class="num">😮‍💨</span>';
+    btn.textContent = '헉헉… 지쳤어요 누르세요';
+    btn.classList.add('tired');
     taunt.textContent = '버튼이 지쳐서 멈췄어요. 정말 누르실 건가요…?';
-    return false;
   }
-  return true;
 }
 
 function escape(px, py) {
-  if (!startedAt) startedAt = Date.now();
   if (!isRunning()) return;
+  const now = Date.now();
+  if (now - lastEscape < COOLDOWN) return;
+  lastEscape = now;
+
   const r = btn.getBoundingClientRect();
   if (!btn.classList.contains('running')) {
     btn.style.left = r.left + 'px';
     btn.style.top = r.top + 'px';
     btn.classList.add('running');
     document.getElementById('slot').style.minWidth = r.width + 'px';
+    counter.classList.add('floating');
   }
-  const w = r.width, h = r.height, pad = 16;
+  const w = r.width, h = r.height, pad = 16, topPad = 120; // 위쪽 카운터 자리는 비워두기
   const maxX = window.innerWidth - w - pad, maxY = window.innerHeight - h - pad;
   let x, y, tries = 0;
   do {
     x = pad + Math.random() * (maxX - pad);
-    y = pad + Math.random() * (maxY - pad);
+    y = topPad + Math.random() * (maxY - topPad);
     tries++;
   } while (Math.hypot(x + w / 2 - px, y + h / 2 - py) < 260 && tries < 30);
   btn.style.left = x + 'px';
   btn.style.top = y + 'px';
-  taunt.textContent = lines[Math.floor(Math.random() * lines.length)];
+
+  left--;
+  bump();
+  if (left > 0) taunt.textContent = lines[Math.floor(Math.random() * lines.length)];
 }
 
 document.addEventListener('mousemove', e => {
-  if (tired) return;
+  if (!isRunning()) return;
   const r = btn.getBoundingClientRect();
   const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
   const dx = Math.max(Math.abs(e.clientX - cx) - r.width / 2, 0);
@@ -191,9 +237,7 @@ btn.addEventListener('click', e => {
   if (isRunning()) { e.preventDefault(); escape(e.clientX, e.clientY); return; }
   location.href = 'withdraw.html';
 });
-
-// 지친 뒤에도 시간 체크 (마우스를 안 움직여도 멈추도록)
-setInterval(() => { if (startedAt) isRunning(); }, 300);
 </script>
+<script src="guestbook.js"></script>
 </body>
 </html>

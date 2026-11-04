@@ -52,6 +52,11 @@
   .card li::before { content: '✅ '; }
   .red { color: #ff0040; } .blue { color: #0066ff; }
 
+  .roster .mms { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+  .roster .mm { background: #fff3a6; border: 2px solid #ff0040; color: #222; border-radius: 10px; padding: 6px 14px; font-size: 20px; }
+  .roster .mm.away { background: #ffe0ef; border-style: dashed; }
+  .roster .mm small { font-size: 14px; color: #ff0040; }
+  .roster .stamp { margin-top: 14px; color: #ff0040; font-size: 15px; }
   .counter { margin-top: 26px; font-size: 24px; background: #000; display: inline-block; padding: 10px 22px; border-radius: 12px; color: #00ff6a; font-family: monospace; }
   .counter b { color: #ff0040; font-size: 30px; animation: blink .5s steps(2,start) infinite; }
 
@@ -97,10 +102,18 @@
     </ul>
   </div>
 
+  <div class="card roster">
+    <h2>📜 2027 자동 연장 회원 명단</h2>
+    <div class="mms"><span class="mm">✅ 이철희</span><span class="mm">✅ 장인형</span><span class="mm">✅ 김수경</span><span class="mm">✅ 황정은</span><span class="mm">✅ 강범현</span><span class="mm">✅ 임유원</span><span class="mm">✅ 김연경</span><span class="mm">✅ 정혜원</span><span class="mm away">💌 김경주 <small>(휴직 중… 보고 싶어요! 자리 맡아뒀어요)</small></span></div>
+    <p class="stamp">※ 위 명단은 탈퇴가 불가능함을 증명합니다 (도장 쾅!)</p>
+  </div>
+
   <div class="counter">남은 탈퇴 가능 인원: <b>0</b>명</div>
   <br>
   <button class="fake-btn" id="fakeBtn">진짜 진짜 탈퇴하기 💥</button>
   <div id="result"></div>
+
+  <section id="guestbook" data-title="✍️ 탈퇴 대신 내년 다짐 남기기" data-sub="어차피 못 나가시니까~ 2027년 교환독서 각오 한마디!" data-page="탈퇴실패"></section>
 
   <p class="fine">※ 본 광고는 우정에 의해 승인되었습니다. 탈퇴 문의는 다음 교환독서 모임에서 책을 다 읽고 해주세요. 회신은 2028년 예정.</p>
 </div>
@@ -137,5 +150,6 @@
     tries++;
   });
 </script>
+<script src="guestbook.js"></script>
 </body>
 </html>
