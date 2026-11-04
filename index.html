@@ -83,6 +83,8 @@
   .counter.done { background: #2e7d32; }
   .num.pop { animation: pop .4s ease-out; }
   @keyframes pop { 0% { transform: scale(1.9); color: #ff6b6b; } 100% { transform: scale(1); } }
+  #leaveBtn.back { animation: comeBack .6s ease-out; }
+  @keyframes comeBack { 0% { transform: scale(.3); opacity: 0; } 60% { transform: scale(1.15); opacity: 1; } 100% { transform: scale(1); } }
   #leaveBtn.tired { background: #7a6654; box-shadow: 0 4px 0 #4f4135; }
   #taunt { margin-top: 26px; min-height: 26px; font-size: 17px; color: #c0392b; font-weight: bold; }
   footer { margin-top: 90px; text-align: center; color: #a8937e; font-size: 13px; padding-bottom: 30px; }
@@ -181,6 +183,14 @@ function bump() {
     counter.innerHTML = '<span class="label">도망 끝!</span><span class="num">😮‍💨</span>';
     btn.textContent = '헉헉… 지쳤어요 누르세요';
     btn.classList.add('tired');
+    // 원래 자리로 돌아오기 (약간 뒤에 – 마지막 도망이 보이도록)
+    setTimeout(() => {
+      btn.classList.remove('running');
+      btn.style.left = ''; btn.style.top = '';
+      counter.classList.remove('floating');
+      btn.classList.add('back');
+      document.querySelector('.leave-box').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 450);
     taunt.textContent = '버튼이 지쳐서 멈췄어요. 정말 누르실 건가요…?';
   }
 }
