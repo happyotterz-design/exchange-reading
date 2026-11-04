@@ -12,8 +12,26 @@
 const SHEET_NAME = '방명록';
 const MAX_ITEMS = 300;
 
+// 시트에 붙은 스크립트면 그 시트를, 따로 만든 스크립트면 '교환독서 방명록' 시트를 새로 만들어 씁니다.
+function getSpreadsheet_() {
+  const active = SpreadsheetApp.getActiveSpreadsheet();
+  if (active) return active;
+  const props = PropertiesService.getScriptProperties();
+  const id = props.getProperty('SHEET_ID');
+  if (id) return SpreadsheetApp.openById(id);
+  const ss = SpreadsheetApp.create('교환독서 방명록');
+  props.setProperty('SHEET_ID', ss.getId());
+  return ss;
+}
+
+// 처음 한 번 실행해서 권한 허용 + 시트 만들기
+function setup() {
+  const sh = getSheet_();
+  Logger.log('방명록 시트: ' + sh.getParent().getUrl());
+}
+
 function getSheet_() {
-  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const ss = getSpreadsheet_();
   let sh = ss.getSheetByName(SHEET_NAME);
   if (!sh) {
     sh = ss.insertSheet(SHEET_NAME);
