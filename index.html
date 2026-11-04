@@ -15,7 +15,9 @@
     min-height: 100vh;
     background-image: radial-gradient(#e8dcc6 1px, transparent 1px);
     background-size: 22px 22px;
+    word-break: keep-all; overflow-wrap: break-word;
   }
+  h1, h2, h3, p { text-wrap: balance; }
   header { text-align: center; padding: 56px 20px 24px; }
   header .tag {
     display: inline-block; font-size: 14px; letter-spacing: 2px;
@@ -89,6 +91,18 @@
   @keyframes comeBack { 0% { transform: scale(.3); opacity: 0; } 60% { transform: scale(1.15); opacity: 1; } 100% { transform: scale(1); } }
   #leaveBtn.tired { background: #7a6654; box-shadow: 0 4px 0 #4f4135; }
   #taunt { margin-top: 26px; min-height: 26px; font-size: 17px; color: #c0392b; font-weight: bold; }
+  @media (max-width: 560px) {
+    header { padding: 40px 18px 18px; }
+    header p { font-size: 15px; }
+    .gallery { grid-template-columns: repeat(2, 1fr); gap: 16px; padding: 0 14px; }
+    .polaroid { padding: 7px 7px 10px; }
+    .polaroid .date { font-size: 11px; margin-top: 8px; letter-spacing: 0; }
+    .polaroid .cap { font-size: 13px; }
+    .members .chips { display: grid; grid-template-columns: repeat(3, auto); justify-content: center; gap: 9px; }
+    .members .m { font-size: 15px; padding: 7px 16px; }
+    .leave-box { margin: 50px 14px 0; }
+    .counter .num { font-size: 42px; }
+  }
   footer { margin-top: 90px; text-align: center; color: #a8937e; font-size: 13px; padding-bottom: 30px; }
 </style>
 </head>
@@ -252,6 +266,6 @@ btn.addEventListener('click', e => {
   location.href = 'withdraw.html';
 });
 </script>
-<script src="guestbook.js?v=20261104-2"></script>
+<script src="guestbook.js?v=20261104-3"></script>
 </body>
 </html>

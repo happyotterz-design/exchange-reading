@@ -9,11 +9,11 @@ const GUESTBOOK_URL = 'https://script.google.com/macros/s/AKfycbw_GaeCrYOQXMUnqv
 
   const css = `
   #guestbook { max-width: 760px; margin: 70px auto 0; padding: 0 20px; text-align: left; color: #3b2f25;
-    font-family: 'Gowun Dodum', 'Jua', sans-serif; position: relative; z-index: 5; }
+    font-family: 'Gowun Dodum', 'Jua', sans-serif; position: relative; z-index: 5; word-break: keep-all; }
   #guestbook .gb-card { background: #fffdf8; border-radius: 18px; padding: 28px 24px;
     box-shadow: 0 8px 26px rgba(0,0,0,.18); border: 2px solid #e8dcc6; }
-  #guestbook h2 { font-size: 26px; text-align: center; margin-bottom: 6px; color: #3b2f25; text-shadow: none; }
-  #guestbook .gb-sub { text-align: center; color: #7a6654; margin-bottom: 20px; font-size: 16px; }
+  #guestbook h2 { text-wrap: balance; font-size: 26px; text-align: center; margin-bottom: 6px; color: #3b2f25; text-shadow: none; }
+  #guestbook .gb-sub { text-wrap: balance; text-align: center; color: #7a6654; margin-bottom: 20px; font-size: 16px; }
   #guestbook form { display: grid; grid-template-columns: 140px 1fr auto; gap: 10px; }
   #guestbook input, #guestbook textarea { font: inherit; font-size: 16px; padding: 12px 14px; border-radius: 10px;
     border: 1.5px solid #d9c9b0; background: #fff; color: #3b2f25; width: 100%; }
@@ -32,7 +32,7 @@ const GUESTBOOK_URL = 'https://script.google.com/macros/s/AKfycbw_GaeCrYOQXMUnqv
   #guestbook .gb-msg { font-size: 16px; line-height: 1.55; white-space: pre-wrap; word-break: break-word; }
   #guestbook .gb-empty { text-align: center; color: #9a8570; padding: 20px 0; }
   @keyframes gbIn { from { opacity: 0; transform: translateY(8px); } }
-  @media (max-width: 600px) { #guestbook form { grid-template-columns: 1fr; } #guestbook button { height: 46px; } }
+  @media (max-width: 600px) { #guestbook { padding: 0 14px; margin-top: 50px; } #guestbook .gb-card { padding: 22px 16px; } #guestbook h2 { font-size: 22px; } #guestbook .gb-sub { font-size: 14px; } #guestbook form { grid-template-columns: 1fr; } #guestbook button { height: 46px; } }
   `;
   const style = document.createElement('style');
   style.textContent = css;
