@@ -66,7 +66,7 @@
     font-family: inherit; font-size: 18px; font-weight: bold;
     background: #c0392b; color: #fff; border: none; border-radius: 12px;
     padding: 14px 34px; cursor: pointer; box-shadow: 0 4px 0 #8e2a20;
-    transition: left .18s ease-out, top .18s ease-out, transform .15s;
+    transition: left .75s cubic-bezier(.34,1.3,.5,1), top .75s cubic-bezier(.34,1.3,.5,1), transform .15s;
     z-index: 1000; white-space: nowrap;
   }
   #leaveBtn.running { position: fixed; }
@@ -110,7 +110,7 @@
 <section class="leave-box">
   <h2>탈퇴를 원하시나요?</h2>
   <p>아래 버튼을 눌러주세요.</p>
-  <div class="counter" id="counter"><span class="label">남은 도망 횟수</span><span class="num" id="countNum">5</span></div>
+  <div class="counter" id="counter"><span class="label">남은 도망 횟수</span><span class="num" id="countNum">3</span></div>
   <div class="btn-slot" id="slot"><button id="leaveBtn">탈퇴하기</button></div>
   <div id="taunt"></div>
 </section>
@@ -159,9 +159,9 @@ PHOTOS.forEach((p, i) => {
 });
 
 /* ===== 도망가는 탈퇴 버튼 ===== */
-const MAX_ESCAPES = 5;       // 도망가는 횟수
+const MAX_ESCAPES = 3;       // 도망가는 횟수
 const NEAR = 110;            // 이 거리(px) 안에 들어오면 도망
-const COOLDOWN = 400;        // 한 번 도망간 뒤 쉬는 시간(ms) – 한 번에 여러 번 세지 않도록
+const COOLDOWN = 900;        // 한 번 도망간 뒤 쉬는 시간(ms) – 한 번에 여러 번 세지 않도록
 const btn = document.getElementById('leaveBtn');
 const taunt = document.getElementById('taunt');
 const counter = document.getElementById('counter');
@@ -192,7 +192,7 @@ function bump() {
       counter.classList.remove('floating');
       btn.classList.add('back');
       document.querySelector('.leave-box').scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }, 450);
+    }, 1000);
     taunt.textContent = '버튼이 지쳐서 멈췄어요. 정말 누르실 건가요…?';
   }
 }
@@ -213,12 +213,14 @@ function escape(px, py) {
   }
   const w = r.width, h = r.height, pad = 16, topPad = 120; // 위쪽 카운터 자리는 비워두기
   const maxX = window.innerWidth - w - pad, maxY = window.innerHeight - h - pad;
+  const minJump = Math.hypot(window.innerWidth, window.innerHeight) * 0.45;
   let x, y, tries = 0;
   do {
     x = pad + Math.random() * (maxX - pad);
     y = topPad + Math.random() * (maxY - topPad);
     tries++;
-  } while (Math.hypot(x + w / 2 - px, y + h / 2 - py) < 260 && tries < 30);
+    // 지금 자리와 마우스에서 멀리멀리 (화면 크기의 45% 이상)
+  } while ((Math.hypot(x + w / 2 - px, y + h / 2 - py) < 300 || Math.hypot(x - r.left, y - r.top) < minJump) && tries < 60);
   btn.style.left = x + 'px';
   btn.style.top = y + 'px';
 
