@@ -1,7 +1,7 @@
 /* ===== 교환독서 방명록 =====
    구글 Apps Script 배포 주소(…/exec)를 아래 따옴표 안에 넣으면 작동해요.
    메인 화면과 탈퇴 페이지가 같은 방명록을 함께 씁니다. */
-const GUESTBOOK_URL = '';
+const GUESTBOOK_URL = 'https://script.google.com/macros/s/AKfycbw_GaeCrYOQXMUnqvrkQmlQMEhx8LVo0a8ILQbJ4DMgbWMMjIjyXv_0aV3xkd5zp95O/exec';
 
 (function () {
   const root = document.getElementById('guestbook');
