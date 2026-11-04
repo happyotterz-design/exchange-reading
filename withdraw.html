@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>★★ 탈퇴 불가 ★★ 축하합니다!!!</title>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Jua&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { overflow-x: hidden; }
+  body {
+    font-family: 'Jua', sans-serif; color: #fff; text-align: center; min-height: 100vh;
+    background: linear-gradient(120deg, #ff0040, #ff8a00, #ffe600, #00e05a, #00b7ff, #6a00ff, #ff00c8, #ff0040);
+    background-size: 400% 400%;
+    animation: rainbow 4s linear infinite;
+  }
+  @keyframes rainbow { 0% { background-position: 0% 50%; } 100% { background-position: 400% 50%; } }
+
+  .marquee { background: #000; color: #ffe600; font-size: 22px; padding: 10px 0; overflow: hidden; white-space: nowrap; border-bottom: 4px dashed #ff00c8; }
+  .marquee span { display: inline-block; padding-left: 100%; animation: slide 12s linear infinite; }
+  @keyframes slide { to { transform: translateX(-100%); } }
+
+  .wrap { max-width: 860px; margin: 0 auto; padding: 30px 16px 60px; position: relative; z-index: 2; }
+
+  .badge {
+    display: inline-block; background: #ffe600; color: #ff0040; font-size: 22px;
+    padding: 8px 20px; border: 4px solid #ff0040; border-radius: 999px; transform: rotate(-4deg);
+    animation: wobble .6s ease-in-out infinite alternate;
+  }
+  @keyframes wobble { to { transform: rotate(4deg) scale(1.08); } }
+
+  h1 {
+    font-family: 'Black Han Sans', sans-serif; font-size: clamp(44px, 11vw, 96px); line-height: 1.1; margin: 24px 0 10px;
+    text-shadow: 4px 4px 0 #000, -2px -2px 0 #ff00c8, 0 0 30px #fff;
+    animation: blink .7s steps(2, start) infinite, hue 2s linear infinite;
+  }
+  @keyframes blink { 50% { opacity: .35; } }
+  @keyframes hue { to { filter: hue-rotate(360deg); } }
+
+  .sub {
+    font-size: clamp(24px, 5.5vw, 40px); color: #ffe600; text-shadow: 3px 3px 0 #000;
+    animation: pulse 1s ease-in-out infinite;
+  }
+  @keyframes pulse { 50% { transform: scale(1.1); } }
+
+  .card {
+    background: #fff; color: #222; border: 6px dashed #ff0040; border-radius: 20px;
+    margin: 34px auto 0; padding: 26px 22px; box-shadow: 0 0 0 6px #ffe600, 0 12px 30px rgba(0,0,0,.35);
+  }
+  .card h2 { font-family: 'Black Han Sans', sans-serif; color: #ff0040; font-size: 30px; margin-bottom: 14px; }
+  .card ul { list-style: none; font-size: 20px; line-height: 2; }
+  .card li::before { content: '✅ '; }
+  .red { color: #ff0040; } .blue { color: #0066ff; }
+
+  .counter { margin-top: 26px; font-size: 24px; background: #000; display: inline-block; padding: 10px 22px; border-radius: 12px; color: #00ff6a; font-family: monospace; }
+  .counter b { color: #ff0040; font-size: 30px; animation: blink .5s steps(2,start) infinite; }
+
+  .fake-btn {
+    margin-top: 30px; font-family: 'Black Han Sans', sans-serif; font-size: 26px; color: #fff; cursor: pointer;
+    background: linear-gradient(#ff3b6b, #d1003a); border: 4px solid #fff; border-radius: 16px;
+    padding: 16px 36px; box-shadow: 0 6px 0 #7a0022; animation: pulse .8s infinite;
+  }
+  #result { margin-top: 18px; font-size: 24px; min-height: 36px; text-shadow: 2px 2px 0 #000; }
+
+  .fine { margin-top: 40px; font-size: 13px; color: rgba(255,255,255,.9); text-shadow: 1px 1px 0 #000; }
+
+  .star { position: fixed; pointer-events: none; z-index: 1; animation: twinkle var(--d) ease-in-out infinite; }
+  @keyframes twinkle {
+    0%, 100% { opacity: 0; transform: scale(.3) rotate(0deg); }
+    50% { opacity: 1; transform: scale(1.3) rotate(180deg); }
+  }
+  .side {
+    position: fixed; top: 50%; font-size: 40px; z-index: 3; animation: wobble .4s infinite alternate;
+  }
+  .side.l { left: 6px; } .side.r { right: 6px; }
+  @media (max-width: 700px) { .side { display: none; } }
+</style>
+</head>
+<body>
+
+<div class="marquee"><span>★★★ 긴급속보 ★★★ 교환독서 탈퇴 시도 감지!!! ★ 본 모임은 탈퇴 기능이 존재하지 않습니다 ★ 지금 바로 2027년 자동 연장 완료 ★ 책 한 권 = 우정 한 스푼 ★★★</span></div>
+
+<div class="side l">👉</div><div class="side r">👈</div>
+
+<div class="wrap">
+  <div class="badge">🎉 축하합니다 🎉</div>
+  <h1>탈퇴할 수<br>없습니다~!!</h1>
+  <p class="sub">✨ 내년에도 함께하셔야 합니다 ✨</p>
+
+  <div class="card">
+    <h2>🔥 오늘만 이 가격!! 🔥</h2>
+    <ul>
+      <li>2027 교환독서 <span class="red">평생 회원권</span> 자동 발급 완료</li>
+      <li>탈퇴 신청 시 <span class="blue">책 1권 추가 증정</span> (거부 불가)</li>
+      <li>환불·취소·도망 <span class="red">절대 불가</span> ㅋㅋ</li>
+      <li>다음 책 차례는 <span class="red">바로 선생님</span>입니다 😘</li>
+    </ul>
+  </div>
+
+  <div class="counter">남은 탈퇴 가능 인원: <b>0</b>명</div>
+  <br>
+  <button class="fake-btn" id="fakeBtn">진짜 진짜 탈퇴하기 💥</button>
+  <div id="result"></div>
+
+  <p class="fine">※ 본 광고는 우정에 의해 승인되었습니다. 탈퇴 문의는 다음 교환독서 모임에서 책을 다 읽고 해주세요. 회신은 2028년 예정.</p>
+</div>
+
+<script>
+  // 반짝이 별 뿌리기
+  const shapes = ['★','✦','✧','✨','⭐','💖','🌟'];
+  for (let i = 0; i < 60; i++) {
+    const s = document.createElement('span');
+    s.className = 'star';
+    s.textContent = shapes[Math.floor(Math.random() * shapes.length)];
+    s.style.left = Math.random() * 100 + 'vw';
+    s.style.top = Math.random() * 100 + 'vh';
+    s.style.fontSize = (14 + Math.random() * 34) + 'px';
+    s.style.color = `hsl(${Math.random() * 360}, 100%, 75%)`;
+    s.style.setProperty('--d', (1 + Math.random() * 2.5) + 's');
+    s.style.animationDelay = (Math.random() * 3) + 's';
+    document.body.appendChild(s);
+  }
+
+  // 진짜 탈퇴 버튼 = 가짜
+  const result = document.getElementById('result');
+  const steps = ['탈퇴 처리 중... 12%', '탈퇴 처리 중... 47%', '탈퇴 처리 중... 99%', '❌ 실패!! 우정이 너무 두꺼워서 처리할 수 없습니다 😝'];
+  const after = ['또 누르셨네요? 내후년까지 연장되었습니다 📚', '누를수록 기간이 늘어나요~ (현재 2030년까지)', '이제 그만 누르시고 책이나 읽으시죠 ☕', '포기하세요~ 우리는 영원히 함께입니다 💕'];
+  let tries = 0, busy = false;
+  document.getElementById('fakeBtn').addEventListener('click', () => {
+    if (busy) return;
+    if (tries === 0) {
+      busy = true;
+      steps.forEach((t, i) => setTimeout(() => { result.textContent = t; if (i === steps.length - 1) busy = false; }, i * 700));
+    } else {
+      result.textContent = after[(tries - 1) % after.length];
+    }
+    tries++;
+  });
+</script>
+</body>
+</html>

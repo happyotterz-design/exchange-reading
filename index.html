@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📚 우리들의 교환독서</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Gowun+Dodum&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Gowun Dodum', sans-serif;
+    background: #f7f1e6;
+    color: #3b2f25;
+    min-height: 100vh;
+    background-image: radial-gradient(#e8dcc6 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+  header { text-align: center; padding: 56px 20px 24px; }
+  header .tag {
+    display: inline-block; font-size: 14px; letter-spacing: 2px;
+    background: #3b2f25; color: #f7f1e6; padding: 6px 14px; border-radius: 999px;
+  }
+  header h1 { font-family: 'Gowun Batang', serif; font-size: clamp(30px, 6vw, 48px); margin: 18px 0 10px; }
+  header p { color: #7a6654; font-size: 17px; }
+
+  .gallery {
+    max-width: 1100px; margin: 20px auto 0; padding: 0 20px;
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 26px;
+  }
+  .polaroid {
+    background: #fff; padding: 12px 12px 16px; border-radius: 4px;
+    box-shadow: 0 6px 18px rgba(59,47,37,.15);
+    transition: transform .25s;
+  }
+  .polaroid:nth-child(odd) { transform: rotate(-1.6deg); }
+  .polaroid:nth-child(even) { transform: rotate(1.4deg); }
+  .polaroid:hover { transform: rotate(0) scale(1.04); z-index: 2; }
+  .polaroid .img {
+    width: 100%; aspect-ratio: 3 / 4; background: #eee5d5; border-radius: 2px;
+    display: flex; align-items: center; justify-content: center; overflow: hidden;
+    font-size: 54px;
+  }
+  .polaroid img, .polaroid video { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .polaroid .cap { font-family: 'Gowun Batang', serif; text-align: center; margin-top: 12px; font-size: 16px; }
+
+  .leave-box {
+    max-width: 640px; margin: 80px auto 120px; padding: 40px 24px; text-align: center;
+    background: #fffaf2; border: 2px dashed #c9b49a; border-radius: 18px;
+  }
+  .leave-box h2 { font-family: 'Gowun Batang', serif; font-size: 26px; margin-bottom: 10px; }
+  .leave-box p { color: #7a6654; margin-bottom: 30px; }
+  .btn-slot { height: 60px; display: flex; align-items: center; justify-content: center; }
+  #leaveBtn {
+    font-family: inherit; font-size: 18px; font-weight: bold;
+    background: #c0392b; color: #fff; border: none; border-radius: 12px;
+    padding: 14px 34px; cursor: pointer; box-shadow: 0 4px 0 #8e2a20;
+    transition: left .18s ease-out, top .18s ease-out, transform .15s;
+    z-index: 1000; white-space: nowrap;
+  }
+  #leaveBtn.running { position: fixed; }
+  #leaveBtn:active { transform: translateY(3px); box-shadow: 0 1px 0 #8e2a20; }
+  #taunt { margin-top: 26px; min-height: 26px; font-size: 17px; color: #c0392b; font-weight: bold; }
+  footer { text-align: center; color: #a8937e; font-size: 13px; padding-bottom: 30px; }
+</style>
+</head>
+<body>
+
+<header>
+  <span class="tag">EXCHANGE READING CLUB</span>
+  <h1>📚 우리들의 교환독서</h1>
+  <p>한 권의 책이 한 바퀴 돌 때마다, 우리는 조금씩 가까워졌습니다.</p>
+</header>
+
+<section class="gallery" id="gallery"></section>
+
+<section class="leave-box">
+  <h2>탈퇴를 원하시나요?</h2>
+  <p>아래 버튼을 눌러주세요.</p>
+  <div class="btn-slot" id="slot"><button id="leaveBtn">탈퇴하기</button></div>
+  <div id="taunt"></div>
+</section>
+
+<footer>© 교환독서 모임 · 한 번 들어오면 나갈 수 없는 곳</footer>
+
+<script>
+/* ===== 사진 설정 =====
+   photos 폴더에 사진을 넣고, 아래 목록에 파일 이름과 설명을 적어주세요. */
+const PHOTOS = [
+  { src: 'photos/p1.jpg', cap: '1회차 · 책들이 처음 모인 날' },
+  { src: 'photos/v1.mp4', poster: 'photos/v1.jpg', cap: '🎬 책, 바꿔 들기!' },
+  { src: 'photos/p2.jpg', cap: '2회차 · 손에서 손으로' },
+  { src: 'photos/v2.mp4', poster: 'photos/v2.jpg', cap: '🎬 한 바퀴 돌았습니다' },
+  { src: 'photos/p3.jpg', cap: '3회차 · 새 책이 들어왔어요' },
+  { src: 'photos/v3.mp4', poster: 'photos/v3.jpg', cap: '🎬 오늘은 누구 차례?' },
+  { src: 'photos/p4.jpg', cap: '4회차 · 간식도 함께 🍪' },
+  { src: 'photos/v4.mp4', poster: 'photos/v4.jpg', cap: '🎬 그리고 또 다음 책으로' },
+];
+
+const gallery = document.getElementById('gallery');
+const emojis = ['📖','📚','☕','🔖','✏️','🌿'];
+PHOTOS.forEach((p, i) => {
+  const card = document.createElement('div');
+  card.className = 'polaroid';
+  card.innerHTML = `<div class="img"></div><div class="cap"></div>`;
+  card.querySelector('.cap').textContent = p.cap;
+  const box = card.querySelector('.img');
+  if (p.src.endsWith('.mp4')) {
+    const v = document.createElement('video');
+    Object.assign(v, { src: p.src, poster: p.poster || '', muted: true, loop: true, autoplay: true, playsInline: true });
+    v.setAttribute('muted', ''); v.setAttribute('playsinline', '');
+    box.appendChild(v);
+    gallery.appendChild(card);
+    return;
+  }
+  const img = new Image();
+  img.alt = p.cap;
+  img.onload = () => box.appendChild(img);
+  img.onerror = () => { box.textContent = emojis[i % emojis.length]; }; // 사진 없으면 이모지
+  img.src = p.src;
+  gallery.appendChild(card);
+});
+
+/* ===== 도망가는 탈퇴 버튼 ===== */
+const RUN_SECONDS = 10;      // 도망가는 시간
+const NEAR = 110;            // 이 거리(px) 안에 들어오면 도망
+const btn = document.getElementById('leaveBtn');
+const taunt = document.getElementById('taunt');
+let startedAt = null;
+let tired = false;
+
+const lines = [
+  '어딜 가세요~? 🙈', '안 잡히지롱 😝', '책이 아직 한 바퀴 더 남았어요!',
+  '조금만 더 생각해 보세요 🤔', '잡을 수 있으면 잡아보세요~', '선생님 없으면 모임이 안 돌아가요 😢',
+  '헉 거의 잡힐 뻔! 💨', '다음 책 벌써 골라놨는데요?'
+];
+
+function isRunning() {
+  if (tired) return false;
+  if (startedAt && (Date.now() - startedAt) / 1000 >= RUN_SECONDS) {
+    tired = true;
+    btn.textContent = '헉헉… 지쳤어요 😮‍💨 누르세요';
+    taunt.textContent = '버튼이 지쳐서 멈췄어요. 정말 누르실 건가요…?';
+    return false;
+  }
+  return true;
+}
+
+function escape(px, py) {
+  if (!startedAt) startedAt = Date.now();
+  if (!isRunning()) return;
+  const r = btn.getBoundingClientRect();
+  if (!btn.classList.contains('running')) {
+    btn.style.left = r.left + 'px';
+    btn.style.top = r.top + 'px';
+    btn.classList.add('running');
+    document.getElementById('slot').style.minWidth = r.width + 'px';
+  }
+  const w = r.width, h = r.height, pad = 16;
+  const maxX = window.innerWidth - w - pad, maxY = window.innerHeight - h - pad;
+  let x, y, tries = 0;
+  do {
+    x = pad + Math.random() * (maxX - pad);
+    y = pad + Math.random() * (maxY - pad);
+    tries++;
+  } while (Math.hypot(x + w / 2 - px, y + h / 2 - py) < 260 && tries < 30);
+  btn.style.left = x + 'px';
+  btn.style.top = y + 'px';
+  taunt.textContent = lines[Math.floor(Math.random() * lines.length)];
+}
+
+document.addEventListener('mousemove', e => {
+  if (tired) return;
+  const r = btn.getBoundingClientRect();
+  const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+  const dx = Math.max(Math.abs(e.clientX - cx) - r.width / 2, 0);
+  const dy = Math.max(Math.abs(e.clientY - cy) - r.height / 2, 0);
+  if (Math.hypot(dx, dy) < NEAR) escape(e.clientX, e.clientY);
+});
+
+// 휴대폰(터치)용: 손가락이 닿으면 도망
+btn.addEventListener('touchstart', e => {
+  if (isRunning()) {
+    e.preventDefault();
+    const t = e.touches[0];
+    escape(t.clientX, t.clientY);
+  }
+}, { passive: false });
+
+btn.addEventListener('click', e => {
+  if (isRunning()) { e.preventDefault(); escape(e.clientX, e.clientY); return; }
+  location.href = 'withdraw.html';
+});
+
+// 지친 뒤에도 시간 체크 (마우스를 안 움직여도 멈추도록)
+setInterval(() => { if (startedAt) isRunning(); }, 300);
+</script>
+</body>
+</html>
