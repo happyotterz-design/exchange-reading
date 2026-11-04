@@ -30,10 +30,13 @@
   @keyframes wobble { to { transform: rotate(4deg) scale(1.08); } }
 
   h1 {
-    font-family: 'Black Han Sans', sans-serif; font-size: clamp(44px, 11vw, 96px); line-height: 1.1; margin: 24px 0 10px;
-    text-shadow: 4px 4px 0 #000, -2px -2px 0 #ff00c8, 0 0 30px #fff;
-    animation: blink .7s steps(2, start) infinite, hue 2s linear infinite;
+    font-family: 'Black Han Sans', sans-serif; font-size: clamp(44px, 11vw, 96px); line-height: 1.15; margin: 24px 0 10px;
+    color: #fff; letter-spacing: 2px;
+    -webkit-text-stroke: 3px #1a0033; paint-order: stroke fill;
+    text-shadow: 6px 6px 0 #ff0040, 12px 12px 0 #1a0033;
+    animation: shake 1.2s ease-in-out infinite;
   }
+  @keyframes shake { 0%,100% { transform: rotate(-2deg) scale(1); } 50% { transform: rotate(2deg) scale(1.05); } }
   @keyframes blink { 50% { opacity: .35; } }
   @keyframes hue { to { filter: hue-rotate(360deg); } }
 
@@ -67,6 +70,20 @@
   }
   #result { margin-top: 18px; font-size: 24px; min-height: 36px; text-shadow: 2px 2px 0 #000; }
 
+  .nav-btns { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 34px; }
+  .nav-btn {
+    font-family: 'Jua', sans-serif; font-size: 20px; text-decoration: none; color: #1a0033;
+    background: #fff; border: 4px solid #1a0033; border-radius: 14px; padding: 12px 24px;
+    box-shadow: 0 5px 0 #1a0033;
+  }
+  .nav-btn.home { background: #ffe600; }
+  .nav-btn:active { transform: translateY(3px); box-shadow: 0 2px 0 #1a0033; }
+  html { scroll-behavior: smooth; }
+  .home-float {
+    position: fixed; left: 14px; bottom: 14px; z-index: 50; font-family: 'Jua', sans-serif; font-size: 16px;
+    text-decoration: none; color: #1a0033; background: #ffe600; border: 3px solid #1a0033; border-radius: 999px;
+    padding: 8px 16px; box-shadow: 0 4px 0 #1a0033;
+  }
   .fine { margin-top: 40px; font-size: 13px; color: rgba(255,255,255,.9); text-shadow: 1px 1px 0 #000; }
 
   .star { position: fixed; pointer-events: none; z-index: 1; animation: twinkle var(--d) ease-in-out infinite; }
@@ -84,6 +101,8 @@
 <body>
 
 <div class="marquee"><span>★★★ 긴급속보 ★★★ 교환독서 탈퇴 시도 감지!!! ★ 본 모임은 탈퇴 기능이 존재하지 않습니다 ★ 지금 바로 2027년 자동 연장 완료 ★ 책 한 권 = 우정 한 스푼 ★★★</span></div>
+
+<a class="home-float" href="index.html">🏠 메인으로</a>
 
 <div class="side l">👉</div><div class="side r">👈</div>
 
@@ -113,7 +132,14 @@
   <button class="fake-btn" id="fakeBtn">진짜 진짜 탈퇴하기 💥</button>
   <div id="result"></div>
 
+  <div class="nav-btns">
+    <a class="nav-btn" href="#guestbook">✍️ 방명록 쓰러 가기</a>
+    <a class="nav-btn home" href="index.html">🏠 메인으로 돌아가기</a>
+  </div>
+
   <section id="guestbook" data-title="✍️ 탈퇴 대신 내년 다짐 남기기" data-sub="어차피 못 나가시니까~ 2027년 교환독서 각오 한마디!" data-page="탈퇴실패"></section>
+
+  <div class="nav-btns"><a class="nav-btn home" href="index.html">🏠 메인으로 돌아가기</a></div>
 
   <p class="fine">※ 본 광고는 우정에 의해 승인되었습니다. 탈퇴 문의는 다음 교환독서 모임에서 책을 다 읽고 해주세요. 회신은 2028년 예정.</p>
 </div>
