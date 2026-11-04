@@ -27,6 +27,8 @@
   .members { max-width: 860px; margin: 6px auto 30px; padding: 0 20px; text-align: center; }
   .members h3 { font-family: 'Gowun Batang', serif; font-size: 18px; color: #7a6654; margin-bottom: 14px; letter-spacing: 1px; }
   .members .chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+  .members .br { flex-basis: 100%; height: 0; }
+  @media (max-width: 560px) { .members .br { display: none; } }
   .members .m { background: #fffaf2; border: 1.5px solid #c9b49a; border-radius: 999px; padding: 8px 18px; font-size: 17px; }
   .members .m.away { border-style: dashed; background: #fdeee8; border-color: #e0a58f; }
   .members .m small { font-size: 13px; color: #b0533c; margin-left: 4px; }
@@ -100,7 +102,7 @@
 
 <section class="members">
   <h3>함께 읽는 사람들</h3>
-  <div class="chips"><span class="m">강범현</span><span class="m away">김경주</span><span class="m">김수경</span><span class="m">김연경</span><span class="m">이철희</span><span class="m">임유원</span><span class="m">장인형</span><span class="m">정혜원</span><span class="m">황정은</span></div>
+  <div class="chips"><span class="m">강범현</span><span class="m away">김경주</span><span class="m">김수경</span><span class="m">김연경</span><span class="m">이철희</span><span class="br"></span><span class="m">임유원</span><span class="m">장인형</span><span class="m">정혜원</span><span class="m">황정은</span></div>
 </section>
 
 <section class="gallery" id="gallery"></section>

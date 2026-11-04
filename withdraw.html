@@ -56,6 +56,8 @@
   .red { color: #ff0040; } .blue { color: #0066ff; }
 
   .roster .mms { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+  .roster .br { flex-basis: 100%; height: 0; }
+  @media (max-width: 640px) { .roster .br { display: none; } }
   .roster .mm { background: #fff3a6; border: 2px solid #ff0040; color: #222; border-radius: 10px; padding: 6px 14px; font-size: 20px; }
   .roster .mm.away { background: #ffe0ef; border-style: dashed; }
   .roster .mm small { font-size: 14px; color: #ff0040; }
@@ -123,7 +125,7 @@
 
   <div class="card roster">
     <h2>📜 2027 자동 연장 회원 명단</h2>
-    <div class="mms"><span class="mm">✅ 강범현</span><span class="mm away">✅ 김경주</span><span class="mm">✅ 김수경</span><span class="mm">✅ 김연경</span><span class="mm">✅ 이철희</span><span class="mm">✅ 임유원</span><span class="mm">✅ 장인형</span><span class="mm">✅ 정혜원</span><span class="mm">✅ 황정은</span></div>
+    <div class="mms"><span class="mm">✅ 강범현</span><span class="mm away">✅ 김경주</span><span class="mm">✅ 김수경</span><span class="mm">✅ 김연경</span><span class="mm">✅ 이철희</span><span class="br"></span><span class="mm">✅ 임유원</span><span class="mm">✅ 장인형</span><span class="mm">✅ 정혜원</span><span class="mm">✅ 황정은</span></div>
     <p class="stamp">※ 위 명단은 탈퇴가 불가능함을 증명합니다 (도장 쾅!)</p>
   </div>
 
